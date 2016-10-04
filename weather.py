@@ -16,7 +16,6 @@ class Location:
 
 
 class Weather:
-
     def __init__(self, api_key):
         self.location = Location()
         api_url = "http://api.openweathermap.org/data/2.5/weather?q=" + self.location.city + ","\
