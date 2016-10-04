@@ -4,8 +4,8 @@ import json
 
 class Location:
     def __init__(self):
-        _response = requests.get("http://ip-api.com/json").text
-        locate = json.loads(_response)
+        _response = requests.get("http://ip-api.com/json")
+        locate = json.loads(_response.text)
         self.city = locate["city"]
         self.region = locate["region"]
         self.region_name = locate["regionName"]
@@ -21,4 +21,4 @@ class Weather:
         api_url = "http://api.openweathermap.org/data/2.5/weather?q=" + self.location.city + ","\
                   + self.location.country_code + "&APPID=" + api_key
         response = requests.get(api_url)
-        self.weather = None
+        self.data = json.loads(response.text)
