@@ -1,5 +1,8 @@
 import requests
+import os
 from lxml import html
+
+api_key = os.environ['OWM_KEY']
 
 def get_elem_div(div, elem):
     return [d.text_content() for d in div
@@ -11,12 +14,14 @@ def get_location():
     txt = response.text
     doc = html.fromstring(txt)
     div = doc.cssselect("div")
-    country = get_elem_div(div, "Country")
-    region = get_elem_div(div, "Region")
+    country = get_elem_div(div, "Country Code").split(" ")[0]
     city = get_elem_div(div, "City")
-    return country, region, city
+    return country, city
 
-print(get_location())
+country, city = get_location()
+url_weather = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + country + "&APPID=" + api_key
+response = requests.get(url_weather)
+print(response)
 
 
 
